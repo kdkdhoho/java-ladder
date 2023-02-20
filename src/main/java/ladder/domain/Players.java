@@ -14,11 +14,15 @@ public class Players {
     private final List<Player> players;
 
     public Players(String[] names) {
-        validateSize(names);
-        validateDuplicate(names);
+        validate(names);
         this.players = Arrays.stream(names)
                 .map(Player::new)
                 .collect(toList());
+    }
+
+    private void validate(String[] names) {
+        validateSize(names);
+        validateDuplicate(names);
     }
 
     public void validateSize(String[] names) {
