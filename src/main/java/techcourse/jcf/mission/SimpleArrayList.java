@@ -4,7 +4,21 @@ import java.util.Arrays;
 
 public class SimpleArrayList implements SimpleList {
 
-    private String[] datas = {};
+    private static final String[] EMPTY_LIST = {};
+
+    private String[] datas;
+
+    public SimpleArrayList() {
+        datas = EMPTY_LIST;
+    }
+
+    public SimpleArrayList(int size) {
+        this.datas = new String[size];
+    }
+
+    public SimpleArrayList(String[] datas) {
+        this.datas = datas;
+    }
 
     @Override
     public boolean add(final String value) {
