@@ -55,7 +55,7 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public boolean contains(final String value) {
-        return false;
+        return indexOf(value) >= 0;
     }
 
     @Override

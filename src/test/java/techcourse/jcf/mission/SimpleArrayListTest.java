@@ -62,7 +62,7 @@ class SimpleArrayListTest {
 
         // then
         assertThat(result).isEqualTo("1");
-     }
+    }
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 3})
@@ -87,25 +87,45 @@ class SimpleArrayListTest {
 
         // then
         assertThat(simpleArrayList.get(0)).isEqualTo("0");
+    }
+
+    @Test
+    @DisplayName("요소가 존재하지 않은 경우에 indexOf() 테스트")
+    void indexOfTest_NotExist() {
+        // when
+        int result = simpleArrayList.indexOf("4");
+
+        // then
+        assertThat(result).isEqualTo(-1);
+    }
+
+    @Test
+    @DisplayName("요소가 존재하는 경우에 indexOf() 테스트")
+    void indexOfTest_Exist() {
+        // when
+        int result = simpleArrayList.indexOf("3");
+
+        // then
+        assertThat(result).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("요소가 존재하지 않는 경우에 contains() 테스트")
+       void containsTest_NotExist() {
+        // when
+        boolean result = simpleArrayList.contains("4");
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("요소가 존재하는 경우에 contains() 테스트")
+    void containsTest_Exist() {
+        // when
+        boolean result = simpleArrayList.contains("1");
+
+        // then
+        assertThat(result).isTrue();
      }
-
-     @Test
-     @DisplayName("요소가 존재하지 않은 경우에 indexOf() 테스트")
-     void indexOfTest_NotExist() {
-         // when
-         int result = simpleArrayList.indexOf("4");
-
-         // then
-         assertThat(result).isEqualTo(-1);
-      }
-
-      @Test
-      @DisplayName("요소가 존재하는 경우에 indexOf() 테스트")
-      void indexOfTest_Exist() {
-          // when
-          int result = simpleArrayList.indexOf("3");
-
-          // then
-          assertThat(result).isEqualTo(2);
-       }
 }
