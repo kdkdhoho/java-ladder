@@ -3,7 +3,6 @@ package techcourse.jcf.mission;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,10 +24,10 @@ class SimpleArrayListTest {
         String data = "1";
 
         // when
-        boolean result = simpleArrayList.add(data);
+        simpleArrayList.add(data);
 
         // expect
-        assertThat(simpleArrayList.size()).isEqualTo(1);
+        assertThat(simpleArrayList.size()).isEqualTo(4);
     }
 
     @ParameterizedTest
