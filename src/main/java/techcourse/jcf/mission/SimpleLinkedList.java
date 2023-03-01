@@ -55,6 +55,13 @@ public class SimpleLinkedList implements SimpleList {
         return first.value;
     }
 
+    public String getLast() {
+        if (last == null) {
+            throw new IllegalStateException("[ERROR] 연결된 노드가 존재하지 않습니다.");
+        }
+        return last.value;
+    }
+
     @Override
     public boolean contains(final String value) {
         return false;
