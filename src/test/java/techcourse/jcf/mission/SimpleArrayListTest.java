@@ -112,7 +112,7 @@ class SimpleArrayListTest {
 
     @Test
     @DisplayName("요소가 존재하지 않는 경우에 contains() 테스트")
-       void containsTest_NotExist() {
+    void containsTest_NotExist() {
         // when
         boolean result = simpleArrayList.contains("4");
 
@@ -128,37 +128,56 @@ class SimpleArrayListTest {
 
         // then
         assertThat(result).isTrue();
-     }
+    }
 
-     @Test
-     @DisplayName("비어있지 않은 경우에 isEmpty() 테스트")
-     void isEmptyTest_NotEmpty() {
-         // when
-         boolean result = simpleArrayList.isEmpty();
+    @Test
+    @DisplayName("비어있지 않은 경우에 isEmpty() 테스트")
+    void isEmptyTest_NotEmpty() {
+        // when
+        boolean result = simpleArrayList.isEmpty();
 
-         // then
-         assertThat(result).isFalse();
-      }
+        // then
+        assertThat(result).isFalse();
+    }
 
-      @Test
-      @DisplayName("비어있는 경우에 isEmpty() 테스트")
-      void isEmptyTest_Empty() {
-          // given
-          simpleArrayList = new SimpleArrayList();
+    @Test
+    @DisplayName("비어있는 경우에 isEmpty() 테스트")
+    void isEmptyTest_Empty() {
+        // given
+        simpleArrayList = new SimpleArrayList();
 
-          // when
-          boolean result = simpleArrayList.isEmpty();
+        // when
+        boolean result = simpleArrayList.isEmpty();
 
-          // then
-          assertThat(result).isTrue();
-       }
+        // then
+        assertThat(result).isTrue();
+    }
 
-       @Test
-       void clearTest() {
-           // when
-           simpleArrayList.clear();
+    @Test
+    void clearTest() {
+        // when
+        simpleArrayList.clear();
 
-           // then
-           assertThat(simpleArrayList.isEmpty()).isTrue();
-        }
+        // then
+        assertThat(simpleArrayList.isEmpty()).isTrue();
+    }
+
+    @Test
+    @DisplayName("배열에 없는 요소를 삭제한 경우 예외 발생")
+    void removeTest_NotExist() {
+        // expect
+        assertThatThrownBy(() -> simpleArrayList.remove("4"))
+                .isInstanceOf(IllegalStateException.class)
+                .withFailMessage("[ERROR] 리스트에 요소가 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("배열에 있는 요소를 삭제한 경우 테스트")
+    void removeTest_success() {
+        // when
+        simpleArrayList.remove("2");
+
+        // then
+        assertThat(simpleArrayList.get(1)).isEqualTo("3");
+    }
 }

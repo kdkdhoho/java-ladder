@@ -1,6 +1,8 @@
 package techcourse.jcf.mission;
 
+import static java.lang.System.arraycopy;
 import static java.util.Arrays.copyOf;
+import static java.util.Arrays.copyOfRange;
 
 import java.util.Arrays;
 
@@ -80,7 +82,20 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public boolean remove(final String value) {
-        return false;
+        int index = indexOf(value);
+        if (index == -1) {
+            throw new IllegalStateException("[ERROR] 리스트에 요소가 존재하지 않습니다.");
+        }
+        if (index == 0) {
+            elements = copyOfRange(elements, 1, elements.length);
+            return true;
+        }
+        if (index == elements.length - 1) {
+            elements = copyOfRange(elements, 0, elements.length - 1);
+            return true;
+        }
+        removeBetween(index);
+        return true;
     }
 
     @Override
@@ -96,15 +111,22 @@ public class SimpleArrayList implements SimpleList {
     private void addFirst(final String value) {
         String[] newElements = new String[elements.length + 1];
         newElements[0] = value;
-        System.arraycopy(elements, 0, newElements, 1, elements.length);
+        arraycopy(elements, 0, newElements, 1, elements.length);
         elements = newElements;
     }
 
     private void addMiddle(final int index, final String value) {
         String[] newElements = new String[elements.length + 1];
-        System.arraycopy(elements, 0, newElements, 0, index);
+        arraycopy(elements, 0, newElements, 0, index);
         newElements[index] = value;
-        System.arraycopy(elements, index, newElements, index + 1, elements.length - index);
+        arraycopy(elements, index, newElements, index + 1, elements.length - index);
+        elements = newElements;
+    }
+
+    private void removeBetween(final int index) {
+        String[] newElements = new String[elements.length - 1];
+        arraycopy(elements, 0, newElements, 0, index);
+        arraycopy(elements, index + 1, newElements, index, elements.length - index - 1);
         elements = newElements;
     }
 
