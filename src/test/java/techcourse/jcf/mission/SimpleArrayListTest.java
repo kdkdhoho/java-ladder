@@ -3,6 +3,7 @@ package techcourse.jcf.mission;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -151,4 +152,13 @@ class SimpleArrayListTest {
           // then
           assertThat(result).isTrue();
        }
+
+       @Test
+       void clearTest() {
+           // when
+           simpleArrayList.clear();
+
+           // then
+           assertThat(simpleArrayList.isEmpty()).isTrue();
+        }
 }

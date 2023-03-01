@@ -90,7 +90,7 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public void clear() {
-
+        elements = EMPTY_LIST;
     }
 
     private void addFirst(final String value) {
