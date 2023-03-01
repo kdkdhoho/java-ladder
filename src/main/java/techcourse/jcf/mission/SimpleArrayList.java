@@ -2,6 +2,8 @@ package techcourse.jcf.mission;
 
 import static java.util.Arrays.copyOf;
 
+import java.util.Arrays;
+
 public class SimpleArrayList implements SimpleList {
 
     private static final String[] EMPTY_LIST = {};
@@ -58,7 +60,12 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public int indexOf(final String value) {
-        return 0;
+        for (int index = 0; index < elements.length; index++) {
+            if (elements[index].equals(value)) {
+                return index;
+            }
+        }
+        return -1;
     }
 
     @Override

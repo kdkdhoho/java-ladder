@@ -88,4 +88,24 @@ class SimpleArrayListTest {
         // then
         assertThat(simpleArrayList.get(0)).isEqualTo("0");
      }
+
+     @Test
+     @DisplayName("요소가 존재하지 않은 경우에 indexOf() 테스트")
+     void indexOfTest_NotExist() {
+         // when
+         int result = simpleArrayList.indexOf("4");
+
+         // then
+         assertThat(result).isEqualTo(-1);
+      }
+
+      @Test
+      @DisplayName("요소가 존재하는 경우에 indexOf() 테스트")
+      void indexOfTest_Exist() {
+          // when
+          int result = simpleArrayList.indexOf("3");
+
+          // then
+          assertThat(result).isEqualTo(2);
+       }
 }
