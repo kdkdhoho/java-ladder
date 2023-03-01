@@ -25,7 +25,10 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public String get(final int index) {
-        return null;
+        if (index < 0 || index >= datas.length) {
+            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
+        }
+        return datas[index];
     }
 
     @Override
