@@ -30,6 +30,31 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public void add(final int index, final String value) {
+        if (index < 0 || index > datas.length) {
+            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
+        }
+
+        if (index == 0) {
+            String[] result = new String[datas.length + 1];
+            result[0] = value;
+            System.arraycopy(datas, 0, result, 1, datas.length);
+            datas = result;
+            return;
+        }
+
+        if (index == datas.length) {
+            String[] result = new String[datas.length + 1];
+            System.arraycopy(datas, 0, result, 0, datas.length);
+            result[result.length - 1] = value;
+            datas = result;
+            return;
+        }
+
+        String[] result = new String[datas.length + 1];
+        System.arraycopy(datas, 0, result, 0, index);
+        result[index] = value;
+        System.arraycopy(datas, index, result, index + 1, datas.length - index);
+        datas = result;
     }
 
     @Override
