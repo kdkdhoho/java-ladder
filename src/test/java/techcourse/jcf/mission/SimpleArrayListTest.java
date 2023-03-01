@@ -15,7 +15,7 @@ class SimpleArrayListTest {
 
     @BeforeEach
     void beforeEach() {
-        this.simpleArrayList = new SimpleArrayList();
+        simpleArrayList = new SimpleArrayList(SimpleList.of("1", "2", "3"));
     }
 
     @Test
@@ -35,7 +35,6 @@ class SimpleArrayListTest {
     @DisplayName("index와 함께 원하는 위치에 add() 테스트")
     void addTest_WithIndex(int index, String expect) {
         // given
-        simpleArrayList = new SimpleArrayList(SimpleList.of("1", "2", "3"));
         String value = "4";
 
         // when
@@ -49,9 +48,6 @@ class SimpleArrayListTest {
     @ValueSource(ints = {-1, 4})
     @DisplayName("리스트의 범위를 벗어난 index를 get() 하는 경우 IndexOutOfBoundsException이 발생한다.")
     void getTest_IndexOutOfBoundsException(int index) {
-        // given
-        simpleArrayList = new SimpleArrayList(SimpleList.of("1", "2", "3"));
-
         // expect
         assertThatThrownBy(() -> simpleArrayList.get(index))
                 .isInstanceOf(IndexOutOfBoundsException.class)
@@ -61,13 +57,35 @@ class SimpleArrayListTest {
     @Test
     @DisplayName("올바른 index로 get() 하는 경우 테스트")
     void getTest_Success() {
-        // given
-        simpleArrayList = new SimpleArrayList(SimpleList.of("1", "2", "3"));
-
         // when
         String result = simpleArrayList.get(0);
 
         // then
         assertThat(result).isEqualTo("1");
+     }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 3})
+    void setTest_IndexOutOfBoundsException(int index) {
+        // given
+        String value = "4";
+
+        // expect
+        assertThatThrownBy(() -> simpleArrayList.set(index, value))
+                .isInstanceOf(IndexOutOfBoundsException.class)
+                .hasMessage("[ERROR] 리스트의 범위를 벗어났습니다.");
+    }
+
+    @Test
+    void setTest_success() {
+        // given
+        int index = 0;
+        String value = "0";
+
+        // when
+        simpleArrayList.set(index, value);
+
+        // then
+        assertThat(simpleArrayList.get(0)).isEqualTo("0");
      }
 }

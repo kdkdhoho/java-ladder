@@ -40,12 +40,14 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public String set(final int index, final String value) {
-        return null;
+        checkRangeToGetOrSet(index);
+        elements[index] = value;
+        return value;
     }
 
     @Override
     public String get(final int index) {
-        checkRangeToGet(index);
+        checkRangeToGetOrSet(index);
         return elements[index];
     }
 
@@ -105,7 +107,7 @@ public class SimpleArrayList implements SimpleList {
         }
     }
 
-    private void checkRangeToGet(final int index) {
+    private void checkRangeToGetOrSet(final int index) {
         if (index < 0 || index >= elements.length) {
             throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
         }
