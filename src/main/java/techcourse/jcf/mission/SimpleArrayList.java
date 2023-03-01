@@ -1,60 +1,41 @@
 package techcourse.jcf.mission;
 
-import java.util.Arrays;
+import static java.util.Arrays.copyOf;
 
 public class SimpleArrayList implements SimpleList {
 
     private static final String[] EMPTY_LIST = {};
 
-    private String[] datas;
+    private String[] elements;
 
     public SimpleArrayList() {
-        datas = EMPTY_LIST;
+        elements = EMPTY_LIST;
     }
 
-    public SimpleArrayList(int size) {
-        this.datas = new String[size];
-    }
-
-    public SimpleArrayList(String[] datas) {
-        this.datas = datas;
+    public SimpleArrayList(final String[] elements) {
+        this.elements = elements;
     }
 
     @Override
     public boolean add(final String value) {
-        String[] newDatas = Arrays.copyOf(datas, datas.length + 1);
-        newDatas[newDatas.length - 1] = value;
-        this.datas = newDatas;
+        String[] newElements = copyOf(elements, elements.length + 1);
+        newElements[newElements.length - 1] = value;
+        this.elements = newElements;
         return true;
     }
 
     @Override
     public void add(final int index, final String value) {
-        if (index < 0 || index > datas.length) {
-            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
-        }
-
+        checkRangeToAdd(index);
         if (index == 0) {
-            String[] result = new String[datas.length + 1];
-            result[0] = value;
-            System.arraycopy(datas, 0, result, 1, datas.length);
-            datas = result;
+            addFirst(value);
             return;
         }
-
-        if (index == datas.length) {
-            String[] result = new String[datas.length + 1];
-            System.arraycopy(datas, 0, result, 0, datas.length);
-            result[result.length - 1] = value;
-            datas = result;
+        if (index == elements.length) {
+            add(value);
             return;
         }
-
-        String[] result = new String[datas.length + 1];
-        System.arraycopy(datas, 0, result, 0, index);
-        result[index] = value;
-        System.arraycopy(datas, index, result, index + 1, datas.length - index);
-        datas = result;
+        addMiddle(index, value);
     }
 
     @Override
@@ -64,10 +45,8 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public String get(final int index) {
-        if (index < 0 || index >= datas.length) {
-            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
-        }
-        return datas[index];
+        checkRangeToGet(index);
+        return elements[index];
     }
 
     @Override
@@ -82,7 +61,7 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public int size() {
-        return datas.length;
+        return elements.length;
     }
 
     @Override
@@ -103,5 +82,32 @@ public class SimpleArrayList implements SimpleList {
     @Override
     public void clear() {
 
+    }
+
+    private void addFirst(final String value) {
+        String[] newElements = new String[elements.length + 1];
+        newElements[0] = value;
+        System.arraycopy(elements, 0, newElements, 1, elements.length);
+        elements = newElements;
+    }
+
+    private void addMiddle(final int index, final String value) {
+        String[] newElements = new String[elements.length + 1];
+        System.arraycopy(elements, 0, newElements, 0, index);
+        newElements[index] = value;
+        System.arraycopy(elements, index, newElements, index + 1, elements.length - index);
+        elements = newElements;
+    }
+
+    private void checkRangeToAdd(final int index) {
+        if (index < 0 || index > elements.length) {
+            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
+        }
+    }
+
+    private void checkRangeToGet(final int index) {
+        if (index < 0 || index >= elements.length) {
+            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
+        }
     }
 }
