@@ -6,12 +6,10 @@ import static java.util.Arrays.copyOfRange;
 
 public class SimpleArrayList implements SimpleList {
 
-    private static final String[] EMPTY_LIST = {};
-
     private String[] elements;
 
     public SimpleArrayList() {
-        elements = EMPTY_LIST;
+        elements = SimpleList.EMPTY_ELEMENTS;
     }
 
     public SimpleArrayList(final String[] elements) {
@@ -105,7 +103,7 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public void clear() {
-        elements = EMPTY_LIST;
+        elements = SimpleList.EMPTY_ELEMENTS;
     }
 
     private void addFirst(final String value) {

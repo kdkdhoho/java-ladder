@@ -3,7 +3,7 @@ package techcourse.jcf.mission;
 // TODO: 제네릭을 사용하지 않는다. String만 다루는 리스트를 구현한다.
 public interface SimpleList {
 
-    String[] EMPTY_ARRAY = {};
+    String[] EMPTY_ELEMENTS = {};
 
     boolean add(String value);
 
@@ -28,7 +28,7 @@ public interface SimpleList {
     void clear();
 
     static String[] of() {
-        return EMPTY_ARRAY;
+        return EMPTY_ELEMENTS;
     }
 
     static String[] of(String s1) {
@@ -57,7 +57,7 @@ public interface SimpleList {
 
     static String[] of(String... strings) {
         if (strings.length == 0) {
-            return EMPTY_ARRAY;
+            return EMPTY_ELEMENTS;
         }
         return strings;
     }
