@@ -75,7 +75,7 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return elements.length == 0;
     }
 
     @Override

@@ -128,4 +128,27 @@ class SimpleArrayListTest {
         // then
         assertThat(result).isTrue();
      }
+
+     @Test
+     @DisplayName("비어있지 않은 경우에 isEmpty() 테스트")
+     void isEmptyTest_NotEmpty() {
+         // when
+         boolean result = simpleArrayList.isEmpty();
+
+         // then
+         assertThat(result).isFalse();
+      }
+
+      @Test
+      @DisplayName("비어있는 경우에 isEmpty() 테스트")
+      void isEmptyTest_Empty() {
+          // given
+          simpleArrayList = new SimpleArrayList();
+
+          // when
+          boolean result = simpleArrayList.isEmpty();
+
+          // then
+          assertThat(result).isTrue();
+       }
 }
