@@ -4,8 +4,6 @@ import static java.lang.System.arraycopy;
 import static java.util.Arrays.copyOf;
 import static java.util.Arrays.copyOfRange;
 
-import java.util.Arrays;
-
 public class SimpleArrayList implements SimpleList {
 
     private static final String[] EMPTY_LIST = {};
@@ -39,7 +37,7 @@ public class SimpleArrayList implements SimpleList {
             add(value);
             return;
         }
-        addMiddle(index, value);
+        addBetween(index, value);
     }
 
     @Override
@@ -115,7 +113,7 @@ public class SimpleArrayList implements SimpleList {
         elements = newElements;
     }
 
-    private void addMiddle(final int index, final String value) {
+    private void addBetween(final int index, final String value) {
         String[] newElements = new String[elements.length + 1];
         arraycopy(elements, 0, newElements, 0, index);
         newElements[index] = value;
