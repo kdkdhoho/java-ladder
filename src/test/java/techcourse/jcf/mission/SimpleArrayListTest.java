@@ -180,4 +180,27 @@ class SimpleArrayListTest {
         // then
         assertThat(simpleArrayList.get(1)).isEqualTo("3");
     }
+
+    @Test
+    @DisplayName("배열의 범위를 벗어난 index로 remove() 한 경우 예외 발생")
+    void removeTest_IndexOutOfBoundsException() {
+        // given
+        int index = 3;
+
+        // expect
+        assertThatThrownBy(() -> simpleArrayList.remove(index))
+                .isInstanceOf(IndexOutOfBoundsException.class)
+                .hasMessage("[ERROR] 리스트의 범위를 벗어났습니다.");
+     }
+
+     @ParameterizedTest
+     @CsvSource(value = {"0:3", "1:3", "2:2"}, delimiter = ':')
+     @DisplayName("적절한 index로 remove() 성공 테스트")
+     void removeTest_WithIndex_Success(int index, String expect) {
+         // when
+         simpleArrayList.remove(index);
+
+         // then
+         assertThat(simpleArrayList.get(1)).isEqualTo(expect);
+      }
 }

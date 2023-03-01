@@ -98,7 +98,9 @@ public class SimpleArrayList implements SimpleList {
 
     @Override
     public String remove(final int index) {
-        return null;
+        String target = get(index);
+        remove(target);
+        return target;
     }
 
     @Override
