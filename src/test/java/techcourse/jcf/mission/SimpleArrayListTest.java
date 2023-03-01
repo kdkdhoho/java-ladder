@@ -34,7 +34,7 @@ class SimpleArrayListTest {
     @DisplayName("리스트의 범위를 벗어난 index를 get() 하는 경우 IndexOutOfBoundsException이 발생한다.")
     void getTest_IndexOutOfBoundsException(int index) {
         // given
-        simpleArrayList = new SimpleArrayList(new String[]{"1", "2", "3"});
+        simpleArrayList = new SimpleArrayList(SimpleList.of("1", "2", "3"));
 
         // expect
         assertThatThrownBy(() -> simpleArrayList.get(index))
@@ -46,7 +46,7 @@ class SimpleArrayListTest {
     @DisplayName("올바른 index로 get() 하는 경우 테스트")
     void getTest_Success() {
         // given
-        simpleArrayList = new SimpleArrayList(new String[]{"1", "2", "3"});
+        simpleArrayList = new SimpleArrayList(SimpleList.of("1", "2", "3"));
 
         // when
         String result = simpleArrayList.get(0);
