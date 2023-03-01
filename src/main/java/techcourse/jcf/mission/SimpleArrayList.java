@@ -35,7 +35,7 @@ public class SimpleArrayList implements SimpleList {
             add(value);
             return;
         }
-        addBetween(index, value);
+        addInMiddle(index, value);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class SimpleArrayList implements SimpleList {
             elements = copyOfRange(elements, 0, elements.length - 1);
             return true;
         }
-        removeBetween(index);
+        removeInMiddle(index);
         return true;
     }
 
@@ -113,7 +113,7 @@ public class SimpleArrayList implements SimpleList {
         elements = newElements;
     }
 
-    private void addBetween(final int index, final String value) {
+    private void addInMiddle(final int index, final String value) {
         String[] newElements = new String[elements.length + 1];
         arraycopy(elements, 0, newElements, 0, index);
         newElements[index] = value;
@@ -121,7 +121,7 @@ public class SimpleArrayList implements SimpleList {
         elements = newElements;
     }
 
-    private void removeBetween(final int index) {
+    private void removeInMiddle(final int index) {
         String[] newElements = new String[elements.length - 1];
         arraycopy(elements, 0, newElements, 0, index);
         arraycopy(elements, index + 1, newElements, index, elements.length - index - 1);
