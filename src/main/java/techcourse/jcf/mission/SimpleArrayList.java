@@ -38,6 +38,27 @@ public class SimpleArrayList implements SimpleList {
         addInMiddle(index, value);
     }
 
+    private void checkRangeToAdd(final int index) {
+        if (index < 0 || index > elements.length) {
+            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
+        }
+    }
+
+    private void addFirst(final String value) {
+        String[] newElements = new String[elements.length + 1];
+        newElements[0] = value;
+        arraycopy(elements, 0, newElements, 1, elements.length);
+        elements = newElements;
+    }
+
+    private void addInMiddle(final int index, final String value) {
+        String[] newElements = new String[elements.length + 1];
+        arraycopy(elements, 0, newElements, 0, index);
+        newElements[index] = value;
+        arraycopy(elements, index, newElements, index + 1, elements.length - index);
+        elements = newElements;
+    }
+
     @Override
     public String set(final int index, final String value) {
         checkRangeToGetOrSet(index);
@@ -49,6 +70,12 @@ public class SimpleArrayList implements SimpleList {
     public String get(final int index) {
         checkRangeToGetOrSet(index);
         return elements[index];
+    }
+
+    private void checkRangeToGetOrSet(final int index) {
+        if (index < 0 || index >= elements.length) {
+            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
+        }
     }
 
     @Override
@@ -82,61 +109,45 @@ public class SimpleArrayList implements SimpleList {
         if (index == -1) {
             throw new IllegalStateException("[ERROR] 리스트에 요소가 존재하지 않습니다.");
         }
-        if (index == 0) {
-            elements = copyOfRange(elements, 1, elements.length);
-            return true;
-        }
-        if (index == elements.length - 1) {
-            elements = copyOfRange(elements, 0, elements.length - 1);
-            return true;
-        }
-        removeInMiddle(index);
+        remove(index);
         return true;
     }
 
     @Override
     public String remove(final int index) {
-        String target = get(index);
-        remove(target);
+        checkRangeToGetOrSet(index);
+        if (index == 0) {
+            return removeFirst();
+        }
+        if (index == elements.length - 1) {
+            return removeLast();
+        }
+        return removeInMiddle(index);
+    }
+
+    private String removeFirst() {
+        String target = elements[0];
+        elements = copyOfRange(elements, 1, elements.length);
+        return target;
+    }
+
+    private String removeLast() {
+        String target = elements[elements.length - 1];
+        elements = copyOfRange(elements, 0, elements.length - 1);
+        return target;
+    }
+
+    private String removeInMiddle(final int index) {
+        String target = elements[index];
+        String[] newElements = new String[elements.length - 1];
+        arraycopy(elements, 0, newElements, 0, index);
+        arraycopy(elements, index + 1, newElements, index, elements.length - index - 1);
+        elements = newElements;
         return target;
     }
 
     @Override
     public void clear() {
         elements = SimpleList.EMPTY_ELEMENTS;
-    }
-
-    private void addFirst(final String value) {
-        String[] newElements = new String[elements.length + 1];
-        newElements[0] = value;
-        arraycopy(elements, 0, newElements, 1, elements.length);
-        elements = newElements;
-    }
-
-    private void addInMiddle(final int index, final String value) {
-        String[] newElements = new String[elements.length + 1];
-        arraycopy(elements, 0, newElements, 0, index);
-        newElements[index] = value;
-        arraycopy(elements, index, newElements, index + 1, elements.length - index);
-        elements = newElements;
-    }
-
-    private void removeInMiddle(final int index) {
-        String[] newElements = new String[elements.length - 1];
-        arraycopy(elements, 0, newElements, 0, index);
-        arraycopy(elements, index + 1, newElements, index, elements.length - index - 1);
-        elements = newElements;
-    }
-
-    private void checkRangeToAdd(final int index) {
-        if (index < 0 || index > elements.length) {
-            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
-        }
-    }
-
-    private void checkRangeToGetOrSet(final int index) {
-        if (index < 0 || index >= elements.length) {
-            throw new IndexOutOfBoundsException("[ERROR] 리스트의 범위를 벗어났습니다.");
-        }
     }
 }
