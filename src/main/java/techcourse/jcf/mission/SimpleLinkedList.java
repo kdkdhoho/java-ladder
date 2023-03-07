@@ -15,12 +15,43 @@ public class SimpleLinkedList implements SimpleList {
     @Override
     public boolean add(final String value) {
         addLast(value);
+        size++;
         return true;
     }
 
     @Override
     public void add(final int index, final String value) {
+        validateRange(index);
 
+        if (index == size) {
+            addLast(value);
+            return;
+        }
+        addBefore(value, getNode(index));
+    }
+
+    private void addBefore(final String value, final Node<String> node) {
+        Node<String> prevNode = node.prev;
+
+        Node<String> newNode = new Node<>(prevNode, value, node);
+        prevNode.next = newNode;
+        node.prev = newNode;
+
+        size++;
+    }
+
+    private Node<String> getNode(final int index) {
+        Node<String> node = first;
+        for (int i = 1; i < index; i++) {
+            node = node.next;
+        }
+        return node;
+    }
+
+    private void validateRange(final int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("[ERROR] 크기를 벗어나는 index를 입력했습니다. 입력값: " + index);
+        }
     }
 
     private void addLast(final String value) {
@@ -45,7 +76,13 @@ public class SimpleLinkedList implements SimpleList {
 
     @Override
     public String get(final int index) {
-        return null;
+        validateRange(index);
+
+        Node<String> node = first;
+        for (int i = 1; i < index; i++) {
+            node = node.next;
+        }
+        return node.value;
     }
 
     public String getFirst() {
