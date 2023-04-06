@@ -15,7 +15,6 @@ public class SimpleLinkedList implements SimpleList {
     @Override
     public boolean add(final String value) {
         addLast(value);
-        size++;
         return true;
     }
 
@@ -71,7 +70,12 @@ public class SimpleLinkedList implements SimpleList {
 
     @Override
     public String set(final int index, final String value) {
-        return null;
+        validateRange(index);
+
+        Node<String> node = getNode(index);
+        node.value = value;
+
+        return value;
     }
 
     @Override
@@ -101,12 +105,32 @@ public class SimpleLinkedList implements SimpleList {
 
     @Override
     public boolean contains(final String value) {
+        Node<String> iterator = first;
+
+        while (iterator != null) {
+            if (iterator.value.equals(value)) {
+                return true;
+            }
+            iterator = iterator.next;
+        }
         return false;
     }
 
     @Override
     public int indexOf(final String value) {
-        return 0;
+        int index = 0;
+
+        Node<String> iterator = first;
+
+        while (iterator != null) {
+            if (iterator.value.equals(value)) {
+                return index;
+            }
+            iterator = iterator.next;
+            index++;
+        }
+
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 값입니다.");
     }
 
     @Override
@@ -116,21 +140,61 @@ public class SimpleLinkedList implements SimpleList {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     @Override
     public boolean remove(final String value) {
+        Node<String> iterator = first;
+
+        while (iterator != null) {
+            if (iterator.value.equals(value)) {
+                if (size == 1) {
+                    clear();
+                    return true;
+                }
+                if (iterator.prev == null) {
+                    iterator.next.prev = null;
+                    first = iterator.next;
+                    size--;
+                    return true;
+                }
+                if (iterator.next == null) {
+                    iterator.prev.next = null;
+                    last = iterator.prev;
+                    size--;
+                    return true;
+                }
+                iterator.prev.next = iterator.next;
+                iterator.next.prev = iterator.prev;
+                size--;
+                return true;
+            }
+            iterator = iterator.next;
+        }
+
         return false;
     }
 
     @Override
     public String remove(final int index) {
-        return null;
+        validateRange(index);
+
+        Node<String> iterator = first;
+        for (int i = 0; i < index; i++) {
+            iterator = iterator.next;
+        }
+
+        String value = iterator.value;
+        remove(value);
+        return value;
     }
 
     @Override
     public void clear() {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
     }
 
     private static class Node<String> {
